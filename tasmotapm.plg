@@ -1,8 +1,8 @@
 <?xml version='1.0' standalone='yes'?>
 <!DOCTYPE PLUGIN [
 <!ENTITY name      "tasmotapm">
-<!ENTITY author    "raisnowpaddi">
-<!ENTITY version   "2024.03.12">
+<!ENTITY author    "Patrick Amann">
+<!ENTITY version   "2024.03.12a">
 <!ENTITY launch    "Settings/TasmotaPMSettings">
 <!ENTITY gitURL    "https://raw.githubusercontent.com/raisnowpaddi/&name;-unraid/main">
 <!ENTITY pluginURL "&gitURL;/&name;.plg">
@@ -14,6 +14,8 @@
 <PLUGIN name="&name;" author="&author;" version="&version;" icon="tasmotapm.png" launch="&launch;" pluginURL="&pluginURL;">
 <CHANGES>
 ##&name;
+###2024.03.12a
+- added support for custom theme colors
 ###2024.03.12
 - added ApexChart for PowerConsumption
 ###2023.06.17
