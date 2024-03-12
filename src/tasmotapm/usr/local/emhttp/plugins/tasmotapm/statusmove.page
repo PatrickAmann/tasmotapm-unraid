@@ -158,9 +158,9 @@ function tasmotapm_status() {
             $(".tasmotapm-energy-apparentpower").html(data.ApparentPower+" VA");
             $(".tasmotapm-energy-reactivepower").html(data.ReactivePower+" VAr");
             $(".tasmotapm-energy-efficiency").html((Number.parseFloat(data.Factor) * 100).toFixed()+" %");
-            $(".tasmotapm-costs_today").html((Number.parseFloat(data.Costs_Price) * Number.parseFloat(data.Today)).toFixed(2)+" "+data.Costs_Unit);
-            $(".tasmotapm-costs_yesterday").html((Number.parseFloat(data.Costs_Price) * Number.parseFloat(data.Yesterday)).toFixed(2)+" "+data.Costs_Unit);
-            $(".tasmotapm-costs_total").html((Number.parseFloat(data.Costs_Price) * Number.parseFloat(data.Total)).toFixed(2)+" "+data.Costs_Unit);
+            $(".tasmotapm-costs-today").html((Number.parseFloat(data.Costs_Price) * Number.parseFloat(data.Today)).toFixed(2)+" "+data.Costs_Unit);
+            $(".tasmotapm-costs-yesterday").html((Number.parseFloat(data.Costs_Price) * Number.parseFloat(data.Yesterday)).toFixed(2)+" "+data.Costs_Unit);
+            $(".tasmotapm-costs-total").html((Number.parseFloat(data.Costs_Price) * Number.parseFloat(data.Total)).toFixed(2)+" "+data.Costs_Unit);
         }
     });
 }
