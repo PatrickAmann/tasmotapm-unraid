@@ -1,14 +1,13 @@
 #!/bin/bash
+
 if [ $# -eq 0 ]; then
     echo "Usage: mkpkg directory_name"
 else
     DIR="$(dirname "$(readlink -f ${BASH_SOURCE[0]})")/${@}"
     TMPDIR=/tmp/tmp.$(( $RANDOM * 19318203981230 + 40 ))
     PLUGIN=$(basename ${DIR})
-    #ARCHIVE="$(dirname $(dirname ${DIR}))/archive"
     ARCHIVE="$(dirname $(dirname ${DIR}))/pkg"
     DESTDIR="$TMPDIR/usr/local/emhttp/plugins/${PLUGIN}"
-    #PLG_FILE="$(dirname $(dirname ${DIR}))/plugin/${PLUGIN}.plg"
     PLG_FILE="$(dirname $(dirname ${DIR}))/${PLUGIN}.plg"
     VERSION=$(date +"%Y.%m.%d")
     ARCH="-x86_64"
@@ -31,7 +30,6 @@ else
 
     mkdir -p "${TMPDIR}/"
     cd "$DIR"
-    #cp --parents -f $(find . -type f ! \( -iname "pkg_build.sh" -o -iname "sftp-config.json" -o -iname ".DS_Store"  \) ) "${TMPDIR}/"
     cp --recursive --dereference . "${TMPDIR}/"
     cd "$TMPDIR/"
     makepkg -l y -c y "${PACKAGE}"
