@@ -2,93 +2,143 @@ Menu="Dashboard:0"
 Cond="version_compare(parse_ini_file('/etc/unraid-version')['version'],'6.11.9','>')"
 ---
 <?PHP
-/*
-  Create a .page file based on this example file and store the file in your plugin directory
-  Make sure this file has a unique name not used by the GUI or other plugins
-
-  This is an example configuration which is used to add custom tiles to the dashboard
-  Placement of one or more custom tiles is done under column1, column2 or column3
-  A column can have as many new custom tiles as needed, each custom tile is a <tbody> element
-  Each tile must have these two properties set:
-
-  "_(description)_"    - this is the (translated) description shown in the Content Manager window
-  "_(Tile tile)_"      - this is the (translated) title of the tile shown in bold on the screen
-
-  The content of the tile can be any text as required by your plugin, this content is placed inside the <td> element
-  A number of predefined spans are available to make fields of certain widths and maybe used to follow the GUI alignment
-  These are:
-  <span class="w18">
-  <span class="w26">
-  <span class="w36">
-  <span class="w44">
-  <span class="w72">
-*/
-$pluginname = "tasmota"; // substitute this entry with the name of your plugin
-
- $tasmotapm_cfg = parse_plugin_cfg("tasmotapm",true);
+$pluginname = "tasmotapm"; // substitute this entry with the name of your plugin
+$tasmotapm_cfg = parse_plugin_cfg("tasmotapm",true);
 $mytiles[$pluginname]['column1'] =
 <<<EOT
 <tbody title="_(Tasmota)_">
-<tr><td>_(Tasmota Power Monitor)_<a href="/Dashboard/Settings/TasmotaPMSettings" title="_(Go to Tasmota settings)_"><i class="fa fa-fw fa-cog control"></i></a></td></tr>
-<tr><td><i class='icon-ups'></i><div class='section'><span id='load'>_(Usage)_: <span class='tasmotapm-energy-power'>0</span></span><br><br></div></td></tr>
+<tr>
+  <td>
+    <i class="icon-ups f32"></i>
+    <div class="section">
+      Tasmota Power Monitor<br />
+      <span>
+          <span class="dense">
+            <i class="ups fa fa-bolt"></i>_(Usage)_: <span class="tasmotapm-energy-power">0</span>
+          </span>
+      </span>
+    </div>
+    <a href="/Dashboard/Settings/TasmotaPMSettings" title="_(Go to Tasmota settings)_">
+      <i class="fa fa-fw fa-cog control"></i>
+    </a>
+  </td>
+</tr>
+<tr>
+  <td>
+    <div style="float: right;">
+      <span>
+        <select id='powerline' class='auto' title="_(Select time frame)_" onchange='changePowerline(this.value)'>
+          <option value="10">10 s</option>
+          <option value="30">30 s</option>
+          <option value="60">1 m</option>
+          <option value="120">2 m</option>
+          <option value="300">5 m</option>
+        </select>
+      </span>
+    </div>
+  </td>
+</tr>
+<tr>
+  <td>
+    <div id="powerusagechart" style="min-height: 135px;"></div>
+  </td>
+</tr>
 
-            <tr class="tasmotapm_view">
-            <td><span class="w26">Today:</span><span class="w26 tasmotapm-energy-today"></span>
-            <span class="w26 tasmotapm-costs_today"></td>
-            </tr>
+  <tr class="tasmotapm_view">
+    <td>
+      <span class="w26">Today:</span>
+      <span class="w26 tasmotapm-energy-today"></span>
+    </td>
+  </tr>
 
-            <tr class="tasmotapm_view">
-            <td><span class="w26">Yesterday:</span><span class="w26 tasmotapm-energy-yesterday"></span>
-            <span class="w26 tasmotapm-costs_yesterday"></span> </td>
-            </tr>
+  <tr class="tasmotapm_view">
+    <td>
+      <span class="w26">Yesterday:</span>
+      <span class="w26 tasmotapm-energy-yesterday"></span>
+    </td>
+  </tr>
 
-            <tr class="tasmotapm_view">
-                <td><span class="w26">Total:</span>
-                <span class="w26 tasmotapm-energy-total"></span>
-                <span class="w26 tasmotapm-costs_total"></span></span></td>
-            </tr>
+  <tr class="tasmotapm_view">
+    <td>
+      <span class="w26">Total:</span>
+      <span class="w26 tasmotapm-energy-total"></span>
+    </td>
+  </tr>
 
-            <tr class="tasmotapm_view">
-                <td><span class="w26">Power</span>
-                <span class="w26 tasmotapm-energy-power"></span></td>
-            </tr>
-            <tr class="tasmotapm_view">
-
-                <td><span class="w26">Voltage</span>
-                <span class="w26 tasmotapm-energy-voltage"></span></td>
-
-            </tr>
-            <tr class="tasmotapm_view">
-
-                <td><span class="w26">Current</span>
-            <span class="w26 tasmotapm-energy-current"></span></td>
-
-            </tr>
-            <tr class="tasmotapm_view">
-            <td><span class="w26">Apparent power</span>
-            <span class="w26 tasmotapm-energy-apparentpower"></span></td>
-
-            </tr>
-            <tr class="tasmotapm_view">
-         <td><span class="w26">Reactive power</span>
-            <span class="w26 tasmotapm-energy-reactivepower"></span></td>
-
-            </tr>
-            <tr class="tasmotapm_view">
-              <td><span class="w26">Efficiency</span>
-                <span class="w26 tasmotapm-energy-efficiency"></span></td>
-
-            </tr>
+  <tr class="tasmotapm_view">
+    <td>
+      <span class="w26">Power</span>
+      <span class="w26 tasmotapm-energy-power"></span>
+    </td>
+  </tr>
+  <tr class="tasmotapm_view">
+    <td>
+      <span class="w26">Voltage</span>
+      <span class="w26 tasmotapm-energy-voltage"></span>
+    </td>
+  </tr>
+  <tr class="tasmotapm_view">
+    <td>
+      <span class="w26">Current</span>
+      <span class="w26 tasmotapm-energy-current"></span>
+    </td>
+  </tr>
+  <tr class="tasmotapm_view">
+    <td>
+      <span class="w26">Apparent power</span>
+      <span class="w26 tasmotapm-energy-apparentpower"></span>
+    </td>
+  </tr>
+  <tr class="tasmotapm_view">
+    <td>
+      <span class="w26">Reactive power</span>
+      <span class="w26 tasmotapm-energy-reactivepower"></span>
+    </td>
+  </tr>
+  <tr class="tasmotapm_view">
+    <td>
+      <span class="w26">Efficiency</span>
+      <span class="w26 tasmotapm-energy-efficiency"></span>
+    </td>
+  </tr>
 </tbody>
 EOT;
 
 ?>
+<style>
+select#powerline {
+  border: none;
+  padding: 0 12px 0 0;
+}
+</style>
+<script src="<?autov('/webGui/javascript/jquery.apexcharts.js')?>"></script>
 <script>
+
+var powerusagechart;
+var powertime = 0;
+var powerline = $.cookie('powerline')||30;
+var power = [];
+
+var options_powerusage = {
+  series: [{name:'powerConsumption',data:power.slice()}],
+  chart: {height:120,type:'line',fontFamily:'clear-sans',animations:{enabled:true,easing:'linear',dynamicAnimation:{speed:1000}},toolbar:{show:false},zoom:{enabled:false}},
+  dataLabels:{enabled:false},
+  tooltip:{enabled:false},
+  stroke:{curve:'smooth', width:1},
+  colors:['#ff8c2f'],
+  markers:{size:0},
+  xaxis:{type: 'datetime',range: powerline-1,labels: {show:false}, axisTicks:{show:false}, axisBorder:{show:false}},
+  yaxis:{max: 100,tickAmount: 4,labels:{formatter:function(v,i){return v.toFixed(0)+' W';},style: {colors:'#fff'}},axisBorder:{show:false},axisTicks:{show:false}},
+  grid:{show:true,borderColor:'#2b2b2b'},
+  legend:{show:false}
+};
 
 function tasmotapm_status() {
     $.getJSON("/plugins/tasmotapm/status.php", (data) => {
         if (data) {
-            $(".tasmotapm-energy-power").html(data.Power+" W");
+            addChartPowerConsumption(data.Power);
+            powerusagechart.updateSeries([{data:power}]);
+			$(".tasmotapm-energy-power").html(data.Power+" W");
             $(".tasmotapm-energy-today").html(data.Today+" kWh");
             $(".tasmotapm-energy-yesterday").html(data.Yesterday+" kWh");
             $(".tasmotapm-energy-total").html(data.Total+" kWh");
@@ -100,17 +150,60 @@ function tasmotapm_status() {
             $(".tasmotapm-costs_today").html((Number.parseFloat(data.Costs_Price) * Number.parseFloat(data.Today)).toFixed(2)+" "+data.Costs_Unit);
             $(".tasmotapm-costs_yesterday").html((Number.parseFloat(data.Costs_Price) * Number.parseFloat(data.Yesterday)).toFixed(2)+" "+data.Costs_Unit);
             $(".tasmotapm-costs_total").html((Number.parseFloat(data.Costs_Price) * Number.parseFloat(data.Total)).toFixed(2)+" "+data.Costs_Unit);
-            $(".tasmotapm-costs_unit").html(data.Costs_Unit);
         }
     });
 }
 
-$(function(){
-  tasmotapm_status();
-});
-
-if (<?=$tasmotapm_cfg['UIREFRESH'];?>) {
-  setInterval(tasmotapm_status, <?=$tasmotapm_cfg['UIREFRESH'];?>);
+function addChartPowerConsumption(powerConsumption) {
+  powertime++;
+  var i = power.length - powerline;
+  if (i > 0) { // clear value outside graph
+    i = i - 1;
+    power[i].x = powertime - powerline;
+    power[i].y = 0;
+  }
+  power.push({x:powertime, y:powerConsumption});
 }
 
+function changePowerline(val) {
+  powerline = val;
+  if (val==30) $.removeCookie('powerline'); else $.cookie('powerline',val,{expires:3650});
+  powerusagechart.updateOptions({xaxis:{range:powerline-1}});
+}
+
+function initPowerChart() {
+  var now = new Date().getTime();
+  for (var i=0; i < powerline; i++) {
+    var x = now + i;
+    var y = power[i]||0;
+    power.push({x,y});
+  }
+  powertime = x + 1;
+}
+
+$(function(){
+  $('#powerline').val(powerline);
+
+  initPowerChart();  
+  powerusagechart = new ApexCharts(document.querySelector('#powerusagechart'), options_powerusage);
+  powerusagechart.render();
+  tasmotapm_status();
+
+  if (<?=$tasmotapm_cfg['UIREFRESH'];?>) {
+    setInterval(tasmotapm_status, <?=$tasmotapm_cfg['UIREFRESH'];?>);
+  }
+});
+
+function resetPowerChart() {
+  // prevent unlimited graph growing
+  power = power.slice(-powerline);
+}
+
+function update900() {
+  // prevent chart overflowing, reset every 15 minutes
+  resetPowerChart();
+  setTimeout(update900,900000);
+}
+
+update900();
 </script>
