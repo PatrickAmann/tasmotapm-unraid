@@ -4,6 +4,14 @@ Cond="version_compare(parse_ini_file('/etc/unraid-version')['version'],'6.11.9',
 <?PHP
 $pluginname = "tasmotapm"; // substitute this entry with the name of your plugin
 $tasmotapm_cfg = parse_plugin_cfg("tasmotapm",true);
+$dynamix = parse_plugin_cfg("dynamix",true);
+switch ($dynamix['display']['theme']) {
+  case 'white': $color = '#1c1b1b'; $grid = '#e3e3e3'; break;
+  case 'black': $color = '#f2f2f2'; $grid = '#2b2b2b'; break;
+  case 'azure': $color = '#606e7f'; $grid = '#f3f0f4'; break;
+  case 'gray' : $color = '#606e7f'; $grid = '#0c0f0b'; break;
+  default     : $color = '#1c1b1b'; $grid = '#e3e3e3'; break;
+}
 $mytiles[$pluginname]['column1'] =
 <<<EOT
 <tbody title="_(Tasmota)_">
@@ -48,6 +56,7 @@ $mytiles[$pluginname]['column1'] =
     <td>
       <span class="w26">Today:</span>
       <span class="w26 tasmotapm-energy-today"></span>
+      <span class="w26 tasmotapm-costs-today"></span>
     </td>
   </tr>
 
@@ -55,6 +64,7 @@ $mytiles[$pluginname]['column1'] =
     <td>
       <span class="w26">Yesterday:</span>
       <span class="w26 tasmotapm-energy-yesterday"></span>
+      <span class="w26 tasmotapm-costs-yesterday"></span>
     </td>
   </tr>
 
@@ -62,6 +72,7 @@ $mytiles[$pluginname]['column1'] =
     <td>
       <span class="w26">Total:</span>
       <span class="w26 tasmotapm-energy-total"></span>
+      <span class="w26 tasmotapm-costs-total"></span>
     </td>
   </tr>
 
@@ -128,8 +139,8 @@ var options_powerusage = {
   colors:['#ff8c2f'],
   markers:{size:0},
   xaxis:{type: 'datetime',range: powerline-1,labels: {show:false}, axisTicks:{show:false}, axisBorder:{show:false}},
-  yaxis:{max: 100,tickAmount: 4,labels:{formatter:function(v,i){return v.toFixed(0)+' W';},style: {colors:'#fff'}},axisBorder:{show:false},axisTicks:{show:false}},
-  grid:{show:true,borderColor:'#2b2b2b'},
+  yaxis:{max: 100,tickAmount: 4,labels:{formatter:function(v,i){return v.toFixed(0)+' W';},style: {colors:'<?=$color?>'}},axisBorder:{show:false},axisTicks:{show:false}},
+  grid:{show:true,borderColor:'<?=$grid?>'},
   legend:{show:false}
 };
 
