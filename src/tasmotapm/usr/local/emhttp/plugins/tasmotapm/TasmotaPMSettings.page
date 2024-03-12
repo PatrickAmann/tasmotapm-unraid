@@ -1,5 +1,5 @@
 Menu="Utilities"
-Icon="tasmotapm.png"
+Icon="plug"
 Title="Tasmota Power Monitor"
 ---
 <?php
