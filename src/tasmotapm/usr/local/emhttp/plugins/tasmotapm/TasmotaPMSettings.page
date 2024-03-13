@@ -11,6 +11,7 @@ $tasmotapm_device_pass	= isset($tasmotapm_cfg['DEVICE_PASS']) ? $tasmotapm_cfg['
 $tasmotapm_uirefresh 		= isset($tasmotapm_cfg['UIREFRESH']) ? $tasmotapm_cfg['UIREFRESH'] : "1000";
 $tasmotapm_costs_price	= isset($tasmotapm_cfg['COSTS_PRICE']) ? $tasmotapm_cfg['COSTS_PRICE'] : "0.0";
 $tasmotapm_costs_unit	= isset($tasmotapm_cfg['COSTS_UNIT']) ? $tasmotapm_cfg['COSTS_UNIT'] : "USD";
+$tasmotapm_costs_display	= isset($tasmotapm_cfg['COSTS_DISPLAY']) ? $tasmotapm_cfg['COSTS_DISPLAY'] : "true";
 ?>
 
 <form markdown="1" method="POST" action="/update.php" target="progressFrame">
@@ -34,6 +35,12 @@ Device IP:
 UI Refresh rate (Milliseconds):
 : <input type="text" name="UIREFRESH" class="narrow" maxlength="50" value="<?=$tasmotapm_uirefresh;?>" placeholder="1000">
 
+Display Accumulated costs:
+: <select id="COSTS_DISPLAY" name="COSTS_DISPLAY" size="1">
+  <?=mk_option($tasmotapm_costs_display, "0", "No");?>
+  <?=mk_option($tasmotapm_costs_display, "1", "Yes");?>
+  </select>
+
 Price per kWh for cost calculation:
 : <input id="COSTS_PRICE" type="text" class="stopped" name="COSTS_PRICE" maxlength="10" value="<?=$tasmotapm_costs_price;?>" title="" placeholder="0.00" >  
 
@@ -54,5 +61,6 @@ function resetDATA(form) {
   form.UIREFRESH.value = 1000;
   form.COSTS_PRICE.value = 0.00;
   form.COSTS_UNIT.value = "USD";
+  form.COSTS_DISPLAY.value = 1;
 }
 </script>

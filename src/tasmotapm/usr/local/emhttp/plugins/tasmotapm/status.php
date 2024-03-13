@@ -6,7 +6,8 @@ $tasmotapm_device_user	= isset($tasmotapm_cfg['DEVICE_USER']) ? $tasmotapm_cfg['
 $tasmotapm_device_pass	= isset($tasmotapm_cfg['DEVICE_PASS']) ? $tasmotapm_cfg['DEVICE_PASS'] : "";
 $tasmotapm_costs_price	= isset($tasmotapm_cfg['COSTS_PRICE']) ? $tasmotapm_cfg['COSTS_PRICE'] : "0.0";
 $tasmotapm_costs_unit	= isset($tasmotapm_cfg['COSTS_UNIT']) ? $tasmotapm_cfg['COSTS_UNIT'] : "USD";
-
+$tasmotapm_costs_unit	= isset($tasmotapm_cfg['COSTS_UNIT']) ? $tasmotapm_cfg['COSTS_UNIT'] : "USD";
+$tasmotapm_costs_display = isset($tasmotapm_cfg['COSTS_DISPLAY']) ? $tasmotapm_cfg['COSTS_DISPLAY'] : "true";
 
 if ($tasmotapm_device_ip == "") {
 	die("Tasmota Device IP missing!");
@@ -39,10 +40,14 @@ $json = array(
 		'ApparentPower' => $data['StatusSNS']['ENERGY']['ApparentPower'],
 		'ReactivePower' => $data['StatusSNS']['ENERGY']['ReactivePower'],
 		'Factor' => $data['StatusSNS']['ENERGY']['Factor'],
-		'Power' => $data['StatusSNS']['ENERGY']['Power'],
-		'Costs_Price' => $tasmotapm_costs_price,
-		'Costs_Unit' => $tasmotapm_costs_unit
+		'Power' => $data['StatusSNS']['ENERGY']['Power']
 	);
+
+if ($tasmotapm_costs_display) {
+	$json['Costs_Price'] = $tasmotapm_costs_price;
+	$json['Costs_Unit'] = $tasmotapm_costs_unit;
+	$json['Costs_Display'] = $tasmotapm_costs_display;
+}
 
 header('Content-Type: application/json');
 echo json_encode($json);
