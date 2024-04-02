@@ -2,9 +2,9 @@
 <!DOCTYPE PLUGIN [
 <!ENTITY name      "tasmotapm">
 <!ENTITY author    "Patrick Amann">
-<!ENTITY version   "2024.03.13">
+<!ENTITY version   "2024.04.02">
 <!ENTITY launch    "Settings/TasmotaPMSettings">
-<!ENTITY gitURL    "https://raw.githubusercontent.com/raisnowpaddi/&name;-unraid/main">
+<!ENTITY gitURL    "https://raw.githubusercontent.com/PatrickAmann/&name;-unraid/main">
 <!ENTITY pluginURL "&gitURL;/&name;.plg">
 <!ENTITY pkgURL    "&gitURL;/pkg">
 <!ENTITY plgPATH   "/boot/config/plugins/&name;">
@@ -14,6 +14,8 @@
 <PLUGIN name="&name;" author="&author;" version="&version;" launch="&launch;" pluginURL="&pluginURL;" icon="plug">
 <CHANGES>
 ##&name;
+###2024.04.02
+- renamed Repository
 ###2024.03.13
 - added possibility to hide costs
 - reconfigured chart to auto scale Y-Axis depending on values
