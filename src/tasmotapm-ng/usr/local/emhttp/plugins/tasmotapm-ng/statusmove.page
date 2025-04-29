@@ -2,8 +2,8 @@ Menu="Dashboard:0"
 Cond="version_compare(parse_ini_file('/etc/unraid-version')['version'],'6.11.9','>')"
 ---
 <?PHP
-$pluginname = "tasmotapm"; // substitute this entry with the name of your plugin
-$tasmotapm_cfg = parse_plugin_cfg("tasmotapm",true);
+$pluginname = "tasmotapm-ng"; // substitute this entry with the name of your plugin
+$tasmotapm_cfg = parse_plugin_cfg("tasmotapm-ng",true);
 $dynamix = parse_plugin_cfg("dynamix",true);
 switch ($dynamix['display']['theme']) {
   case 'white': $color = '#1c1b1b'; $grid = '#e3e3e3'; break;
@@ -31,7 +31,7 @@ $mytiles[$pluginname]['column1'] =
           </span>
       </span>
     </div>
-    <a href="/Dashboard/Settings/TasmotaPMSettings" title="_(Go to Tasmota settings)_">
+    <a href="/Dashboard/Settings/TasmotaPMNGSettings" title="_(Go to Tasmota settings)_">
       <i class="fa fa-fw fa-cog control"></i>
     </a>
   </td>

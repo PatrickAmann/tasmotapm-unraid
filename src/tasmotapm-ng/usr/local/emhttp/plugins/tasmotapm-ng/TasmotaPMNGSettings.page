@@ -1,9 +1,9 @@
 Menu="Utilities"
 Icon="plug"
-Title="Tasmota Power Monitor"
+Title="Tasmota Power Monitor - NG"
 ---
 <?php
-$tasmotapm_cfg 			= parse_plugin_cfg("tasmotapm",true);
+$tasmotapm_cfg 			= parse_plugin_cfg("tasmotapm-ng",true);
 $tasmotapm_device_ip	= isset($tasmotapm_cfg['DEVICE_IP']) ? $tasmotapm_cfg['DEVICE_IP'] : "";
 $tasmotapm_use_pass			= isset($tasmotapm_cfg['DEVICE_USE_PASS']) ? $tasmotapm_cfg['DEVICE_USE_PASS'] : "false";
 $tasmotapm_device_user	= isset($tasmotapm_cfg['DEVICE_USER']) ? $tasmotapm_cfg['DEVICE_USER'] : "admin";
@@ -15,7 +15,7 @@ $tasmotapm_costs_display	= isset($tasmotapm_cfg['COSTS_DISPLAY']) ? $tasmotapm_c
 ?>
 
 <form markdown="1" method="POST" action="/update.php" target="progressFrame">
-<input type="hidden" name="#file" value="tasmotapm/tasmotapm.cfg" />
+<input type="hidden" name="#file" value="tasmotapm-ng/tasmotapm-ng.cfg" />
 
 Use a password for Tasmota Web UI:
 : <select id="DEVICE_USE_PASS" name="DEVICE_USE_PASS" size="1">

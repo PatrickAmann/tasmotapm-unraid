@@ -4,7 +4,7 @@ Cond="version_compare(parse_ini_file('/etc/unraid-version')['version'],'6.12.0-b
 ---
 <style type="text/css">
     <?php
-        $tasmotapm_cfg = parse_plugin_cfg("tasmotapm",true);
+        $tasmotapm_cfg = parse_plugin_cfg("tasmotapm-ng",true);
         $sortnr = $N+2
     ?>
     #dash_tasmotapm_settings i, #tasmotapm_view {margin-top:0px;}
@@ -90,7 +90,7 @@ Cond="version_compare(parse_ini_file('/etc/unraid-version')['version'],'6.12.0-b
 </table>
 <script>
 const tasmotapm_status = () => {
-    $.getJSON("/plugins/tasmotapm/status.php", (data) => {
+    $.getJSON("/plugins/tasmotapm-ng/status.php", (data) => {
         if (data) {
             $(".tasmotapm-energy-power").html(data.Power);
             $(".tasmotapm-energy-today").html(data.Today);

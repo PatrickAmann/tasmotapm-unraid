@@ -1,0 +1,57 @@
+<?xml version='1.0' standalone='yes'?>
+<!DOCTYPE PLUGIN [
+<!ENTITY name      "tasmotapm-ng">
+<!ENTITY author    "Patrick Amann">
+<!ENTITY version   "2025.04.29">
+<!ENTITY launch    "Settings/TasmotaPMNGSettings">
+<!ENTITY gitURL    "https://raw.githubusercontent.com/PatrickAmann/tasmotapm-unraid/main">
+<!ENTITY pluginURL "&gitURL;/&name;.plg">
+<!ENTITY pkgURL    "&gitURL;/pkg">
+<!ENTITY plgPATH   "/boot/config/plugins/&name;">
+<!ENTITY plgNAME   "&name;-&version;-x86_64">
+<!ENTITY emhttp    "/usr/local/emhttp/plugins/&name;">
+]>
+<PLUGIN name="&name;" author="&author;" version="&version;" launch="&launch;" pluginURL="&pluginURL;" icon="plug">
+<CHANGES>
+##&name;
+###2025.04.29
+###2025.04.29
+- renamed plugin to revent conflict with original repo
+###2024.04.02
+- renamed Repository
+###2024.03.13
+- added possibility to hide costs
+- reconfigured chart to auto scale Y-Axis depending on values
+###2024.03.12d
+- fixed settings-icon to match match different themes
+###2024.03.12c
+- changed icon to match different themes
+###2024.03.12b
+- fixed missing cost caluclations
+###2024.03.12a
+- added support for custom theme colors
+###2024.03.12
+- added ApexChart for PowerConsumption
+###2023.06.17
+- fix refresh bug
+###2023.06.16
+- Make 6.12 compatible
+###2021.03.24
+- fix efficiency factor and dashboard moving.
+###2021.03.22
+- Inital release.
+</CHANGES>
+
+ <FILE Name="&plgPATH;/&plgNAME;.txz" Min="6.9.1" Run="upgradepkg --install-new">
+  <URL>&pkgURL;/&plgNAME;.txz</URL>
+ </FILE>
+ <FILE Run="/bin/bash" Method="remove">
+  <INLINE>
+   echo "Removing &name;..."
+   removepkg &plgPATH;/*.txz
+   rm -rf &plgPATH;
+   rm -rf &emhttp;
+   echo "&name; has been removed"
+  </INLINE>
+ </FILE>
+</PLUGIN>
