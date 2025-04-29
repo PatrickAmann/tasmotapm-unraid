@@ -217,7 +217,7 @@ var options_powerusage = {
 };
 
 function tasmotapm_status() {
-    $.getJSON("/plugins/tasmotapm/status.php", (data) => {
+    $.getJSON("/plugins/tasmotapm-ng/status.php", (data) => {
         if (data) {
             addChartPowerConsumption(data.Power);
             powerusagechart.updateSeries([{data:power}]);

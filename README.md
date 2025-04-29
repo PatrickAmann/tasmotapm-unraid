@@ -15,5 +15,5 @@ I use an Aisirer Power Monitoring Plug (AWP07L) with Tasmota firmware 8.5.1 and 
 
 Plugins > Install Plugin
 ```
-https://raw.githubusercontent.com/PatrickAmann/tasmotapm-unraid/main/tasmotapm.plg
+https://raw.githubusercontent.com/PatrickAmann/tasmotapm-unraid/main/tasmotapm-ng.plg
 ```
